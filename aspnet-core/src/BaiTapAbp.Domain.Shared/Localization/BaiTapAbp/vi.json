@@ -1,0 +1,22 @@
+{
+  "Culture": "vi",
+  "Texts": {
+    "AppName": "BaiTapAbp",
+    "Menu:Home": "Trang chủ",
+    "LongWelcomeMessage": "Chào mừng bạn đến với ứng dụng. Đây là một dự án khởi nghiệp dựa trên ABP framework. Để biết thêm thông tin, hãy truy cập",
+    "Welcome": "Chào mừng",
+
+    "ProductNameRequired": "Tên sản phẩm là bắt buộc",
+    "ProductNameLength": "Tên sản phẩm phải có từ {0} đến {100} ký tự",
+    "ProductStock": "Số lượng tồn kho không được âm.",
+
+    "ShopNameRequired": "Tên shop là bắt buộc",
+    "ShopNameLength": "Tên shop phải có từ {0} đến {100} ký tự",
+    "AddressShopLength": "Địa chỉ phải có từ {0} đến {100} ký tự",
+
+    "FullNameUserRequired": "Tên người dùng là bắt buộc",
+    "FullNameLength": "Tên người dùng phải có từ {0} đến {100} ký tự",
+    "AddressUserLength": "Tên shop phải có từ {0} đến {100} ký tự",
+    "GenderValue": "Giá trị giới tính không hợp lệ."
+  }
+}
