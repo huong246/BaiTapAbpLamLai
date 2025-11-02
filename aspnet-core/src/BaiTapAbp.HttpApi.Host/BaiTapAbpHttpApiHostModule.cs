@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using BaiTapAbp.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Extensions.DependencyInjection;
@@ -11,9 +12,11 @@ using Microsoft.Extensions.Hosting;
 using BaiTapAbp.EntityFrameworkCore;
 using BaiTapAbp.MultiTenancy;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.LeptonXLite;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.LeptonXLite.Bundling;
 using Microsoft.OpenApi.Models;
+using OpenIddict.Abstractions;
 using OpenIddict.Validation.AspNetCore;
 using Volo.Abp;
 using Volo.Abp.Account;
@@ -24,6 +27,7 @@ using Volo.Abp.AspNetCore.Mvc.UI.Bundling;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared;
 using Volo.Abp.AspNetCore.Serilog;
 using Volo.Abp.Autofac;
+using Volo.Abp.Data;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Volo.Abp.Security.Claims;
@@ -63,7 +67,6 @@ public class BaiTapAbpHttpApiHostModule : AbpModule
     {
         var configuration = context.Services.GetConfiguration();
         var hostingEnvironment = context.Services.GetHostingEnvironment();
-
         ConfigureAuthentication(context);
         ConfigureBundles();
         ConfigureUrls(configuration);
@@ -73,20 +76,34 @@ public class BaiTapAbpHttpApiHostModule : AbpModule
         ConfigureSwaggerServices(context, configuration);
     }
 
-    private void ConfigureAuthentication(ServiceConfigurationContext context)
+    private void ConfigureAuthentication(ServiceConfigurationContext context )
     {
         var configuration = context.Services.GetConfiguration();
-        context.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        context.Services.AddAuthentication(options =>
+            { 
+                options.DefaultScheme = IdentityConstants.ApplicationScheme; 
+                options.DefaultSignInScheme = IdentityConstants.ApplicationScheme; 
+                options.DefaultChallengeScheme = IdentityConstants.ApplicationScheme;
+                options.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme;
+                //options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
             .AddJwtBearer(options =>
             {
                 options.Authority = configuration["AuthServer:Authority"];
                 options.RequireHttpsMetadata = Convert.ToBoolean(configuration["AuthServer:RequireHttpsMetadata"]);
                 options.Audience = "BaiTapAbp";  
             });
-        context.Services.ForwardIdentityAuthenticationForBearer(OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme);
+       // context.Services.ForwardIdentityAuthenticationForBearer(OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme);
         context.Services.Configure<AbpClaimsPrincipalFactoryOptions>(options =>
         {
             options.IsDynamicClaimsEnabled = true;
+        });
+        context.Services.AddAuthorization(options =>
+        { 
+            options.AddPolicy("RequireAdminRole", policy => 
+                policy.RequireRole(UserRole.Admin));  
+            options.AddPolicy(UserRole.Customer, policy => 
+                policy.RequireRole(UserRole.Customer));
         });
     }
 
@@ -206,16 +223,28 @@ public class BaiTapAbpHttpApiHostModule : AbpModule
         app.UseRouting();
         app.UseCors();
         app.UseAuthentication();
-        app.UseAbpOpenIddictValidation();
+       // app.UseAbpOpenIddictValidation();
+    
 
         if (MultiTenancyConsts.IsEnabled)
         {
             app.UseMultiTenancy();
         }
+        app.UseWhen(
+            ctx => ctx.Request.Path.StartsWithSegments("/api") 
+                   && !ctx.Request.Path.StartsWithSegments("/api/account"),  
+            apiApp =>
+            {
+                apiApp.UseAbpOpenIddictValidation();
+            });
         app.UseUnitOfWork();
         app.UseDynamicClaims();
         app.UseAuthorization();
-
+        /*using (var scope = context.ServiceProvider.CreateScope())
+        {
+            var dataSeeder = scope.ServiceProvider.GetRequiredService<IDataSeeder>();
+            //dataSeeder.SeedAsync();
+        }*/
         app.UseSwagger();
         app.UseAbpSwaggerUI(c =>
         {
@@ -224,6 +253,8 @@ public class BaiTapAbpHttpApiHostModule : AbpModule
             var configuration = context.ServiceProvider.GetRequiredService<IConfiguration>();
             c.OAuthClientId(configuration["AuthServer:SwaggerClientId"]);
             c.OAuthScopes("BaiTapAbp");
+            c.OAuthUsePkce();
+            c.ConfigObject.AdditionalItems.Add("persistAuthorization", "true");
         });
 
         app.UseAuditing();

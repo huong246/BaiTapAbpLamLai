@@ -5,7 +5,7 @@ using Volo.Abp.Application.Dtos;
 
 namespace BaiTapAbp.Dtos;
 
-public class ProductDto: EntityDto
+public class ProductDto: EntityDto<int>
 {
     [MaxLength(100)]
     public string Name { get; set; } = string.Empty;

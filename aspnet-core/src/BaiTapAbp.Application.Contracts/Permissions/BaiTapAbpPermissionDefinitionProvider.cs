@@ -31,6 +31,17 @@ public class BaiTapAbpPermissionDefinitionProvider : PermissionDefinitionProvide
             RolePermissions.Users.Edit, L("Permission:Users.Edit"));
         userPermission.AddChild(
             RolePermissions.Users.Delete, L("Permission:Users.Delete"));
+        
+        var productPermission = myGroup.AddPermission(RolePermissions.Products.Default, L("Permission:Products.Default"));
+        productPermission.AddChild(RolePermissions.Products.Create, L("Permission:Products.Create"));
+        productPermission.AddChild(RolePermissions.Products.Edit, L("Permission:Products.Edit"));
+        productPermission.AddChild(RolePermissions.Products.Delete, L("Permission:Products.Delete"));
+        
+        var sellerRequestPermission = myGroup.AddPermission(
+            RolePermissions.SellerRequests.Default, L("Permission:SellerRequests"));
+        
+        sellerRequestPermission.AddChild(
+            RolePermissions.SellerRequests.Manage, L("Permission:SellerRequests.Manage"));
     }
 
     private static LocalizableString L(string name)

@@ -28,7 +28,7 @@ public class BaiTapAbpDbContext :
     /* Add DbSet properties for your Aggregate Roots / Entities here. */ 
     public virtual DbSet<ProductEntity> Products { get; set; }
     public virtual DbSet<ShopEntity> Shops { get; set; }
-     
+    public virtual DbSet<SellerRequestEntity> SellerRequests { get; set; }
     //Identity
  
     public DbSet<IdentityUser> Users { get;set; }

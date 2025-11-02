@@ -11,11 +11,11 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\BaiTapAbp.EntityFrameworkCore\BaiTapAbp.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\BaiTapAbp.Application.Tests\BaiTapAbp.Application.Tests.csproj" />
-    <PackageReference Include="AutoMapper" Version="15.1.0" />
     <PackageReference Include="Dapper" Version="2.1.66" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.1" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.2" />
     <PackageReference Include="Volo.Abp.AspNetCore.Authentication.JwtBearer" Version="8.1.0" />
+    <PackageReference Include="Volo.Abp.AutoMapper" Version="8.3.0" />
     <PackageReference Include="Volo.Abp.EntityFrameworkCore.Sqlite" Version="8.3.0" />
   </ItemGroup>
 

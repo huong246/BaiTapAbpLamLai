@@ -7,7 +7,7 @@ namespace BaiTapAbp.Repositories;
 
 public interface IShopRepository : IRepository<ShopEntity, int>, IScopedDependency
 { 
-    Task<bool> HasProductsAsync(int shopId);
-    Task<ShopEntity?> FindBySellerAsync(int sellerId);
+    Task<bool> HaveProductInShop(int shopId);
+   
 
 }

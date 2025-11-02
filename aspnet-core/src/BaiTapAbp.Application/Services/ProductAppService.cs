@@ -2,13 +2,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using BaiTapAbp.Dtos;
 using BaiTapAbp.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 
 namespace BaiTapAbp.Services;
-
+[Authorize(RolePermissions.Products.Default)]
 public class ProductAppService(IRepository<ProductEntity, int> productRepository)
     : CrudAppService<ProductEntity, ProductDto, int, ProductPagedRequestDto, CreateUpdateProductDto>(productRepository)
 {
@@ -20,21 +21,24 @@ public class ProductAppService(IRepository<ProductEntity, int> productRepository
     }
 
     [HttpPost]
-    [ActionName("GetProductsPaged")]
+    [ActionName("GetPaged")]
+    [AllowAnonymous]
     public override async Task<PagedResultDto<ProductDto>> GetListAsync(ProductPagedRequestDto input)
     {
         return await base.GetListAsync(input);  
     }
     //create product
     [HttpPost]
-    [ActionName("CreateProduct")]
+    [ActionName("Create")]
+    [Authorize(RolePermissions.Products.Create)]
     public override async Task<ProductDto> CreateAsync(CreateUpdateProductDto input)
     {
         return await base.CreateAsync(input);
     }
     //update product
     [HttpPost]
-    [ActionName("UpdateProduct")]
+    [ActionName("Update")]
+    [Authorize(RolePermissions.Products.Create)]
     public override async Task<ProductDto> UpdateAsync(int id, CreateUpdateProductDto input)
     {
         return await base.UpdateAsync(id, input);
@@ -42,7 +46,8 @@ public class ProductAppService(IRepository<ProductEntity, int> productRepository
     
     //detele product
     [HttpPost]
-    [ActionName("DeleteProduct")]
+    [ActionName("Delete")]
+    [Authorize(RolePermissions.Products.Create)]
     public override async Task DeleteAsync(int id)
     {
         await base.DeleteAsync(id);

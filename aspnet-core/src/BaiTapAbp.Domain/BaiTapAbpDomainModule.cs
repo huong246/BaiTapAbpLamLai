@@ -61,11 +61,7 @@ public class BaiTapAbpDomainModule : AbpModule
         {
             options.IsEnabled = MultiTenancyConsts.IsEnabled;
         });
-        Configure<AbpPermissionOptions>(options =>
-        {
-            options.DefinitionProviders.Add<BaiTapAbpPermissionDefinitionProvider>();
-        });
-       
+        
 #if DEBUG
         context.Services.Replace(ServiceDescriptor.Singleton<IEmailSender, NullEmailSender>());
 #endif

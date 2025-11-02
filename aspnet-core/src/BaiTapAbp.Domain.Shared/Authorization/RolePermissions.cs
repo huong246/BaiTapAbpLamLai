@@ -24,4 +24,10 @@ public class RolePermissions
         public const string Edit = Default + ".Edit";
         public const string Delete = Default + ".Delete";
     }
+    
+    public static class SellerRequests
+    {
+        public const string Default = GroupName + ".SellerRequests";
+        public const string Manage = Default + ".Manage";  
+    }
 }
