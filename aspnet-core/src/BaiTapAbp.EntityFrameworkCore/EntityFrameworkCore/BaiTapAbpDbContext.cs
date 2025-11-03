@@ -29,6 +29,7 @@ public class BaiTapAbpDbContext :
     public virtual DbSet<ProductEntity> Products { get; set; }
     public virtual DbSet<ShopEntity> Shops { get; set; }
     public virtual DbSet<SellerRequestEntity> SellerRequests { get; set; }
+    public virtual DbSet<CategoryEntity>  Categories { get; set; }
     //Identity
  
     public DbSet<IdentityUser> Users { get;set; }
@@ -95,6 +96,17 @@ public class BaiTapAbpDbContext :
                 .WithMany()
                 .HasForeignKey(p=> p.ShopId)
                 .OnDelete(DeleteBehavior.Restrict);
+            p.HasOne<CategoryEntity>()
+                .WithMany()
+                .HasForeignKey(x => x.CategoryId)
+                .OnDelete(DeleteBehavior.Restrict);
+        });
+        builder.Entity<CategoryEntity>(c =>
+        {
+            c.ToTable("Category");
+            c.ConfigureByConvention();
+            c.Property(x => x.Name).IsRequired().HasMaxLength(100);
+            c.HasIndex(x => x.Name).IsUnique();
         });
     }
 }

@@ -19,5 +19,8 @@ public class BaiTapAbpApplicationAutoMapperProfile : Profile
         
         CreateMap<SellerRequestEntity, SellerRequestDto>();
         CreateMap<CreateUpdateSellerRequestDto, SellerRequestEntity>();
+        
+        CreateMap<CategoryEntity, CategoryDto>();
+        CreateMap<CreateUpdateCategoryDto, CategoryEntity>();
     }
 }

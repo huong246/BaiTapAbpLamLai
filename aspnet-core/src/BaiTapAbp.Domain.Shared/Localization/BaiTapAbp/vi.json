@@ -17,6 +17,9 @@
     "FullNameUserRequired": "Tên người dùng là bắt buộc",
     "FullNameLength": "Tên người dùng phải có từ {0} đến {100} ký tự",
     "AddressUserLength": "Tên shop phải có từ {0} đến {100} ký tự",
-    "GenderValue": "Giá trị giới tính không hợp lệ."
+    "GenderValue": "Giá trị giới tính không hợp lệ.",
+    
+    "CategoryNameRequired": "Tên danh mục là bắt buộc",
+    "CategoryNameLength": "Chiều dài tên danh mục phải có ừ {0} đến {100} ký tự"
   }
 }

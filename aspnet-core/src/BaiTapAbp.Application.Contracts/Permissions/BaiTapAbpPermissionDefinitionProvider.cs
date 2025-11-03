@@ -42,6 +42,12 @@ public class BaiTapAbpPermissionDefinitionProvider : PermissionDefinitionProvide
         
         sellerRequestPermission.AddChild(
             RolePermissions.SellerRequests.Manage, L("Permission:SellerRequests.Manage"));
+        
+        var categoryRequestPermission = myGroup.AddPermission(RolePermissions.Categories.Default, L("Permission: CategoryRequests"));
+        categoryRequestPermission.AddChild(RolePermissions.Categories.Create, L("Permission: CategoryRequests.Create"));
+        categoryRequestPermission.AddChild(RolePermissions.Categories.Edit, L("Permission: CategoryRequests.Edit"));
+        categoryRequestPermission.AddChild(RolePermissions.Categories.Delete, L("Permission: CategoryRequests.Delete"));
+
     }
 
     private static LocalizableString L(string name)

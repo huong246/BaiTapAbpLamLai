@@ -30,4 +30,12 @@ public class RolePermissions
         public const string Default = GroupName + ".SellerRequests";
         public const string Manage = Default + ".Manage";  
     }
+
+    public static class Categories
+    {
+        public const string Default = GroupName + ".Category";
+        public const string Create = Default + ".Create";
+        public const string Edit = Default + ".Edit";
+        public const string Delete = Default + ".Delete";
+    }
 }

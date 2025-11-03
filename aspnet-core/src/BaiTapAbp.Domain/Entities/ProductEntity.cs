@@ -14,4 +14,5 @@ public class ProductEntity : FullAuditedEntity<int>
     public decimal Price { get; set; }
     public int Stock { get; set; }
     public int ShopId {get; set;}
+    public int CategoryId {get;set;}
 }
