@@ -68,6 +68,7 @@ public class SellerRequestAppService(
         await userManager.AddToRoleAsync(user, UserRole.Seller);
         request.Approve(CurrentUser.GetId());
         await requestRepository.UpdateAsync(request);
+      
     }
 
     [Authorize(RolePermissions.SellerRequests.Manage)]

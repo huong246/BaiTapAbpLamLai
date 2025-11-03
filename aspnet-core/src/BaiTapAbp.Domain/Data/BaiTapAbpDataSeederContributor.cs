@@ -39,6 +39,11 @@ public class BaiTapAbpDataSeederContributor(
         await permissionManager.SetForRoleAsync(UserRole.Seller, RolePermissions.Shops.Create, true);
         await permissionManager.SetForRoleAsync(UserRole.Seller, RolePermissions.Shops.Edit, true);
         await  permissionManager.SetForRoleAsync(UserRole.Seller, RolePermissions.Shops.Delete, true);
+        await permissionManager.SetForRoleAsync(UserRole.Seller, RolePermissions.Products.Default, true);
+        await permissionManager.SetForRoleAsync(UserRole.Seller, RolePermissions.Products.Create, true);
+        await permissionManager.SetForRoleAsync(UserRole.Seller, RolePermissions.Products.Edit, true);
+        await permissionManager.SetForRoleAsync(UserRole.Seller, RolePermissions.Products.Delete, true);
+
         await CreateAdminUserAsync();
     }
 

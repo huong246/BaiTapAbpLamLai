@@ -10,3 +10,4 @@ public class HomeController : AbpController
         return Redirect("~/swagger");
     }
 }
+//1q2w3E*

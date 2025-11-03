@@ -16,7 +16,10 @@ public class ProductAppService(IRepository<ProductEntity, int> productRepository
     protected override async Task<IQueryable<ProductEntity>> CreateFilteredQueryAsync(ProductPagedRequestDto input)
     {
         var query = await base.CreateFilteredQueryAsync(input);
-        query.WhereIf(!string.IsNullOrWhiteSpace(input.Filter), x => x.Name.Contains(input.Filter));
+        query = query.WhereIf(
+            !string.IsNullOrWhiteSpace(input.Filter), 
+            x => x.Name.Contains(input.Filter)
+        );
         return query;
     }
 
@@ -38,7 +41,7 @@ public class ProductAppService(IRepository<ProductEntity, int> productRepository
     //update product
     [HttpPost]
     [ActionName("Update")]
-    [Authorize(RolePermissions.Products.Create)]
+    [Authorize(RolePermissions.Products.Edit)]
     public override async Task<ProductDto> UpdateAsync(int id, CreateUpdateProductDto input)
     {
         return await base.UpdateAsync(id, input);
@@ -47,7 +50,7 @@ public class ProductAppService(IRepository<ProductEntity, int> productRepository
     //detele product
     [HttpPost]
     [ActionName("Delete")]
-    [Authorize(RolePermissions.Products.Create)]
+    [Authorize(RolePermissions.Products.Delete)]
     public override async Task DeleteAsync(int id)
     {
         await base.DeleteAsync(id);

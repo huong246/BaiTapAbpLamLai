@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Volo.Abp.Domain.Entities.Auditing;
@@ -12,5 +13,5 @@ public class ShopEntity : FullAuditedEntity<int>
     public string Name { get; set; } = string.Empty;
     [MaxLength(100)]
     public string Address { get; set; } = string.Empty;
-  
+    public Guid SellerId { get; set; }
 }

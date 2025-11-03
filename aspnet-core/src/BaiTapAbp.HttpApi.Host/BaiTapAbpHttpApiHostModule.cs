@@ -5,35 +5,36 @@ using System.Linq;
 using BaiTapAbp.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Extensions.DependencyInjection;
+ 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using BaiTapAbp.EntityFrameworkCore;
 using BaiTapAbp.MultiTenancy;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+ 
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.LeptonXLite;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.LeptonXLite.Bundling;
 using Microsoft.OpenApi.Models;
-using OpenIddict.Abstractions;
-using OpenIddict.Validation.AspNetCore;
+ 
 using Volo.Abp;
 using Volo.Abp.Account;
 using Volo.Abp.Account.Web;
 using Volo.Abp.AspNetCore.MultiTenancy;
 using Volo.Abp.AspNetCore.Mvc;
+ 
 using Volo.Abp.AspNetCore.Mvc.UI.Bundling;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared;
 using Volo.Abp.AspNetCore.Serilog;
 using Volo.Abp.Autofac;
 using Volo.Abp.Data;
-using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Volo.Abp.Security.Claims;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.VirtualFileSystem;
+ 
 
 namespace BaiTapAbp;
 
@@ -74,6 +75,11 @@ public class BaiTapAbpHttpApiHostModule : AbpModule
         ConfigureVirtualFileSystem(context);
         ConfigureCors(context, configuration);
         ConfigureSwaggerServices(context, configuration);
+        /* Configure<MvcOptions>(options =>
+          {
+              options.Filters.Add<DisableAntiforgeryForAccountEndpointsFilter>();
+          });
+          */
     }
 
     private void ConfigureAuthentication(ServiceConfigurationContext context )
@@ -222,6 +228,19 @@ public class BaiTapAbpHttpApiHostModule : AbpModule
         app.UseStaticFiles();
         app.UseRouting();
         app.UseCors();
+        app.Use(async (context, next) =>
+        {
+            if (context.Request.Path.StartsWithSegments("/api/account/logout"))
+            {
+                foreach (var cookieKey in context.Request.Cookies.Keys)
+                {
+                    context.Response.Cookies.Delete(cookieKey);
+                }
+            }
+
+            await next();
+        });
+
         app.UseAuthentication();
        // app.UseAbpOpenIddictValidation();
     
@@ -240,11 +259,11 @@ public class BaiTapAbpHttpApiHostModule : AbpModule
         app.UseUnitOfWork();
         app.UseDynamicClaims();
         app.UseAuthorization();
-        /*using (var scope = context.ServiceProvider.CreateScope())
+       /* using (var scope = context.ServiceProvider.CreateScope())
         {
             var dataSeeder = scope.ServiceProvider.GetRequiredService<IDataSeeder>();
-            //dataSeeder.SeedAsync();
-        }*/
+            dataSeeder.SeedAsync();
+        } */
         app.UseSwagger();
         app.UseAbpSwaggerUI(c =>
         {
@@ -256,6 +275,7 @@ public class BaiTapAbpHttpApiHostModule : AbpModule
             c.OAuthUsePkce();
             c.ConfigObject.AdditionalItems.Add("persistAuthorization", "true");
         });
+        
 
         app.UseAuditing();
         app.UseAbpSerilogEnrichers();

@@ -9,6 +9,8 @@ using BaiTapAbp.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp;
+using Volo.Abp.Authorization;
+
 namespace BaiTapAbp.Services;
 
 [Authorize(RolePermissions.Shops.Default)]
@@ -36,7 +38,20 @@ public class ShopAppService(IShopRepository shopRepository)
     [Authorize(RolePermissions.Shops.Create)]
     public override async Task<ShopDto> CreateAsync(CreateUpdateShopDto input)
     {
-        return await base.CreateAsync(input);
+        var userId = CurrentUser.Id; 
+        if (!userId.HasValue)
+        {
+            throw new AbpAuthorizationException("Authentication required to perform this action.");
+        }
+        var actualUserId = userId.Value;
+        if (await shopRepository.UserHasAlreadyAShop(actualUserId))
+        {
+            throw new UserFriendlyException("Shop already exists.");
+        }
+        var entity = await MapToEntityAsync(input);
+        entity.SellerId = actualUserId;
+        await Repository.InsertAsync(entity, autoSave: true);
+        return await MapToGetOutputDtoAsync(entity);
     }
 
     [HttpPost]
@@ -54,7 +69,7 @@ public class ShopAppService(IShopRepository shopRepository)
     {
         if (await shopRepository.HaveProductInShop(id))
         {
-            throw new UserFriendlyException("Không thể xóa cửa hàng này vì vẫn còn sản phẩm.");
+            throw new UserFriendlyException("Shop have product so can't be deleted.");
         }
         await base.DeleteAsync(id);
     }

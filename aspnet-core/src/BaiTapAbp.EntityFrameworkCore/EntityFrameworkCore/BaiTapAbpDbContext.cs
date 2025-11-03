@@ -67,14 +67,19 @@ public class BaiTapAbpDbContext :
             b.Property(x => x.FullName).IsRequired().HasMaxLength(100);
             b.Property(x => x.Address).HasMaxLength(100);
             b.Property(x => x.Gender);
+            
         });
-        
+
         builder.Entity<ShopEntity>(s =>
         {
             s.ToTable("Shop");
             s.ConfigureByConvention();
             s.Property(x => x.Name).IsRequired().HasMaxLength(100);
-            s.Property(x=>x.Address).HasMaxLength(100);
+            s.Property(x => x.Address).HasMaxLength(100);
+            s.HasOne<UserEntity>()
+                .WithOne()
+                .HasForeignKey<ShopEntity>(x => x.SellerId)
+                .OnDelete(DeleteBehavior.Restrict);
         });
         builder.Entity<ProductEntity>(p =>
         {
