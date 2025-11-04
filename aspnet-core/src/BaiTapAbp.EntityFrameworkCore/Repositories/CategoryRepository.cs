@@ -8,8 +8,17 @@ namespace BaiTapAbp.Repositories;
 public class CategoryRepository(IDbContextProvider<BaiTapAbpDbContext> dbContextProvider)
     : BaseRepository<CategoryEntity, int>(dbContextProvider), ICategoryRepository
 {
-    public Task<bool> HaveCategoryInDbAsync(string categoryName)
+    public async Task<bool> HaveCategoryInDbAsync(string categoryName)
     {
-        throw new System.NotImplementedException();
+        var sql = @"
+    SELECT EXISTS(
+        SELECT 1 
+        FROM `Category` c
+        WHERE c.IsDeleted = 0 
+          AND c.Name = @CategoryName
+    ) AS IsExist;
+    ";
+        var result = await QueryFirstOrDefaultAsync<bool?>(sql, new { CategoryName = categoryName });
+        return result == true;
     }
 }

@@ -29,13 +29,13 @@ public class CategoryAppService(IRepository<CategoryEntity, int> categoryReposit
         return await base.GetListAsync(input);
     }
 
-    /*
+   /* 
     [HttpPost]
     [ActionName("Create")]
     [Authorize(RolePermissions.Categories.Create)]
     public override async Task<CategoryDto> CreateAsync(CreateUpdateCategoryDto input)
     {
-        
+      
     }
     */
 }

@@ -46,7 +46,7 @@ public class ShopAppService(IShopRepository shopRepository)
         var actualUserId = userId.Value;
         if (await shopRepository.UserHasAlreadyAShop(actualUserId))
         {
-            throw new UserFriendlyException("Shop already exists.");
+            throw new UserFriendlyException("Seller has already been shopped.");
         }
         var entity = await MapToEntityAsync(input);
         entity.SellerId = actualUserId;
