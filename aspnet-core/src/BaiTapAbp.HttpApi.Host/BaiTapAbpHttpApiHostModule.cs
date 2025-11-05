@@ -291,7 +291,8 @@ public class BaiTapAbpHttpApiHostModule : AbpModule
             c.OAuthClientId(configuration["AuthServer:SwaggerClientId"]);
             c.OAuthScopes("BaiTapAbp");
             c.OAuthUsePkce();
-            c.ConfigObject.AdditionalItems.Add("persistAuthorization", "true");
+            c.ConfigObject.AdditionalItems.Add("persistAuthorization", "false");
+          
         });
         
 

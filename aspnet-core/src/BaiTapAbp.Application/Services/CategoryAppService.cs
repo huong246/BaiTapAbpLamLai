@@ -8,10 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
-using Volo.Abp.Domain.Repositories;
 
 namespace BaiTapAbp.Services;
-
 public class CategoryAppService(ICategoryRepository categoryRepository)
     : CrudAppService<CategoryEntity, CategoryDto, int, CategoryPagedRequestDto, CreateUpdateCategoryDto>(
         categoryRepository)

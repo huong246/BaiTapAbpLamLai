@@ -34,20 +34,29 @@ public class BaiTapAbpDataSeederContributor(
         await CreateRoleAsync(UserRole.Admin);
         await CreateRoleAsync(UserRole.Seller);
         await CreateRoleAsync(UserRole.Customer);
+        
         await GrantAllPermissionsToRoleAsync(UserRole.Admin);
+        
         await permissionManager.SetForRoleAsync(UserRole.Seller, RolePermissions.Shops.Default, true);
         await permissionManager.SetForRoleAsync(UserRole.Seller, RolePermissions.Shops.Create, true);
         await permissionManager.SetForRoleAsync(UserRole.Seller, RolePermissions.Shops.Edit, true);
         await  permissionManager.SetForRoleAsync(UserRole.Seller, RolePermissions.Shops.Delete, true);
+        
         await permissionManager.SetForRoleAsync(UserRole.Seller, RolePermissions.Products.Default, true);
         await permissionManager.SetForRoleAsync(UserRole.Seller, RolePermissions.Products.Create, true);
         await permissionManager.SetForRoleAsync(UserRole.Seller, RolePermissions.Products.Edit, true);
         await permissionManager.SetForRoleAsync(UserRole.Seller, RolePermissions.Products.Delete, true);
+        
         await permissionManager.SetForRoleAsync(UserRole.Admin, RolePermissions.Categories.Default, true);
         await permissionManager.SetForRoleAsync(UserRole.Admin, RolePermissions.Categories.Create, true);
         await permissionManager.SetForRoleAsync(UserRole.Admin, RolePermissions.Categories.Edit, true);
         await permissionManager.SetForRoleAsync(UserRole.Admin, RolePermissions.Categories.Delete, true);
 
+        await permissionManager.SetForRoleAsync(UserRole.Customer, RolePermissions.Categories.Default, true);
+        await permissionManager.SetForRoleAsync(UserRole.Customer, RolePermissions.Categories.Create, true);
+        await permissionManager.SetForRoleAsync(UserRole.Customer, RolePermissions.Categories.Edit, true);
+        await permissionManager.SetForRoleAsync(UserRole.Customer, RolePermissions.Categories.Delete, true);
+        
         await CreateAdminUserAsync();
     }
 

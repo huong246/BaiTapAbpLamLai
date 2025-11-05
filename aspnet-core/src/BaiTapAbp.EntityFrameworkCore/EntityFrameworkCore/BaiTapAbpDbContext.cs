@@ -30,6 +30,7 @@ public class BaiTapAbpDbContext :
     public virtual DbSet<ShopEntity> Shops { get; set; }
     public virtual DbSet<SellerRequestEntity> SellerRequests { get; set; }
     public virtual DbSet<CategoryEntity>  Categories { get; set; }
+    public virtual DbSet<CartEntity> Carts { get; set; }
     //Identity
  
     public DbSet<IdentityUser> Users { get;set; }
@@ -107,6 +108,16 @@ public class BaiTapAbpDbContext :
             c.ConfigureByConvention();
             c.Property(x => x.Name).IsRequired().HasMaxLength(100);
             c.HasIndex(x => x.Name).IsUnique();
+        });
+        builder.Entity<CartEntity>(c =>
+        {
+            c.ToTable("Cart");
+            c.ConfigureByConvention();
+            c.Property(x => x.CustomerId).IsRequired();
+            c.Property(x=>x.ShopId).IsRequired();
+            c.Property(x => x.ProductId).IsRequired();
+            c.Property(x=> x.Quantity).IsRequired();
+            c.HasIndex(x => new { x.CustomerId, x.ShopId, x.ProductId }).IsUnique();
         });
     }
 }
