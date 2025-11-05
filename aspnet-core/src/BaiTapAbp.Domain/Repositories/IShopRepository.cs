@@ -10,5 +10,6 @@ public interface IShopRepository : IRepository<ShopEntity, int>, IScopedDependen
 { 
     Task<bool> HaveProductInShop(int shopId);
     Task<bool> UserHasAlreadyAShop(Guid userId);
+    Task<int?> GetShopIdBySellerIdAsync(Guid sellerId);
 
 }

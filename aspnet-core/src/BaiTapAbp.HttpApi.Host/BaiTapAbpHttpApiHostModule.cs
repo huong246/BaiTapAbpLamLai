@@ -17,10 +17,11 @@ using Microsoft.AspNetCore.Mvc;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.LeptonXLite;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.LeptonXLite.Bundling;
 using Microsoft.OpenApi.Models;
- 
+using OpenIddict.Server;
 using Volo.Abp;
 using Volo.Abp.Account;
 using Volo.Abp.Account.Web;
+using Volo.Abp.Application.Dtos;
 using Volo.Abp.AspNetCore.MultiTenancy;
 using Volo.Abp.AspNetCore.Mvc;
  
@@ -34,8 +35,8 @@ using Volo.Abp.Security.Claims;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.VirtualFileSystem;
- 
-
+using OpenIddict.Server; 
+using Volo.Abp.OpenIddict;
 namespace BaiTapAbp;
 
 [DependsOn(
@@ -62,6 +63,8 @@ public class BaiTapAbpHttpApiHostModule : AbpModule
                 options.UseAspNetCore();
             });
         });
+        LimitedResultRequestDto.MaxMaxResultCount = 1000;
+        
     }
 
     public override void ConfigureServices(ServiceConfigurationContext context)
@@ -75,6 +78,21 @@ public class BaiTapAbpHttpApiHostModule : AbpModule
         ConfigureVirtualFileSystem(context);
         ConfigureCors(context, configuration);
         ConfigureSwaggerServices(context, configuration);
+        
+        
+        context.Services.PreConfigure<OpenIddictServerBuilder>(builder =>
+        {
+           
+            builder.SetRefreshTokenLifetime(TimeSpan.FromDays(7)); 
+            builder.SetAccessTokenLifetime(TimeSpan.FromMinutes(30)); 
+        });
+        
+        context.Services.Configure<Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationOptions>("Cookies", options =>
+        {
+            options.ExpireTimeSpan = TimeSpan.FromDays(7);
+            options.SlidingExpiration = true; 
+        });
+
         /* Configure<MvcOptions>(options =>
           {
               options.Filters.Add<DisableAntiforgeryForAccountEndpointsFilter>();
@@ -211,7 +229,7 @@ public class BaiTapAbpHttpApiHostModule : AbpModule
     {
         var app = context.GetApplicationBuilder();
         var env = context.GetEnvironment();
-
+        
         if (env.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
@@ -259,11 +277,11 @@ public class BaiTapAbpHttpApiHostModule : AbpModule
         app.UseUnitOfWork();
         app.UseDynamicClaims();
         app.UseAuthorization();
-       /* using (var scope = context.ServiceProvider.CreateScope())
+        using (var scope = context.ServiceProvider.CreateScope())
         {
             var dataSeeder = scope.ServiceProvider.GetRequiredService<IDataSeeder>();
             dataSeeder.SeedAsync();
-        } */
+        } 
         app.UseSwagger();
         app.UseAbpSwaggerUI(c =>
         {

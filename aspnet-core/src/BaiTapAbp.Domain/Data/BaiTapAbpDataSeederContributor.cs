@@ -43,6 +43,10 @@ public class BaiTapAbpDataSeederContributor(
         await permissionManager.SetForRoleAsync(UserRole.Seller, RolePermissions.Products.Create, true);
         await permissionManager.SetForRoleAsync(UserRole.Seller, RolePermissions.Products.Edit, true);
         await permissionManager.SetForRoleAsync(UserRole.Seller, RolePermissions.Products.Delete, true);
+        await permissionManager.SetForRoleAsync(UserRole.Admin, RolePermissions.Categories.Default, true);
+        await permissionManager.SetForRoleAsync(UserRole.Admin, RolePermissions.Categories.Create, true);
+        await permissionManager.SetForRoleAsync(UserRole.Admin, RolePermissions.Categories.Edit, true);
+        await permissionManager.SetForRoleAsync(UserRole.Admin, RolePermissions.Categories.Delete, true);
 
         await CreateAdminUserAsync();
     }
@@ -57,10 +61,10 @@ public class BaiTapAbpDataSeederContributor(
             return;
         }
         var existingAdmin = await userManager.FindByNameAsync(adminConfig.UserName);
-
+        IdentityUser adminUser;
         if (existingAdmin == null)
-        {
-            var adminUser = new IdentityUser(
+        { 
+                adminUser = new IdentityUser(
                 Guid.NewGuid(),
                 adminConfig.UserName,
                 adminConfig.Email
@@ -80,6 +84,21 @@ public class BaiTapAbpDataSeederContributor(
                 throw new AbpValidationException("Could not assign Admin role to the admin user.");
             }
         }
+        else
+        {
+            
+            adminUser = existingAdmin;
+        }
+        if (!await userManager.IsInRoleAsync(adminUser, UserRole.Admin))
+        {
+           
+            var roleResult = await userManager.AddToRoleAsync(adminUser, UserRole.Admin);
+            if (!roleResult.Succeeded)
+            {
+                throw new AbpValidationException("Could not assign Admin role to the admin user.");
+            }
+        }
+        
     }
     private async Task CreateRoleAsync(string roleName)
     {

@@ -26,6 +26,8 @@ public class CreateUpdateProductDto
     public int Stock { get; set; }
     [Required]
     public int ShopId { get; set; }
+    [Required]
+    public int CategoryId { get; set; }
 }
 
 public class ProductPagedRequestDto : BasePagedResultRequestDto

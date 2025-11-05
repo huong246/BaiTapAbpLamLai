@@ -8,4 +8,6 @@ namespace BaiTapAbp.Repositories;
 public interface ICategoryRepository :  IRepository<CategoryEntity, int>, IScopedDependency
 {
     Task<bool> HaveCategoryInDbAsync(string categoryName);
+    Task<bool> HaveProductInCategoryAsync(int categoryId);
+    Task<bool> CheckCategoryExistInDbAsync(int categoryId);
 }

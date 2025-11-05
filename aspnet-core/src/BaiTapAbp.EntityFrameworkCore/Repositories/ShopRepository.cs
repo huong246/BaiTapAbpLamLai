@@ -35,4 +35,18 @@ public class ShopRepository(IDbContextProvider<BaiTapAbpDbContext> dbContextProv
         var result = await QueryFirstOrDefaultAsync<bool?>(sql, new { UserId = userId });
         return result == true;
     }
+    
+    public async Task<int?> GetShopIdBySellerIdAsync(Guid sellerId)
+    { 
+        var sql = @"
+            SELECT Id 
+            FROM Shop
+            WHERE SellerId = @SellerId AND IsDeleted = 0
+            LIMIT 1"; 
+        var result = await QueryFirstOrDefaultAsync<int?>(
+            sql,
+            new { SellerId = sellerId }
+        );
+        return result;  
+    }
 }
