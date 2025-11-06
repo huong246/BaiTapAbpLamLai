@@ -1,0 +1,13 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using Volo.Abp.AspNetCore.Mvc;
+
+namespace BaiTapAbp.Controllers;
+
+public class HomeController : AbpController
+{
+    public ActionResult Index()
+    {
+        return Redirect("~/swagger");
+    }
+}
+//1q2w3E*

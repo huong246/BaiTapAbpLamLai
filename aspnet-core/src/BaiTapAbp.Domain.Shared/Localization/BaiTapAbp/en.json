@@ -1,0 +1,26 @@
+{
+  "Culture": "en",
+  "Texts": {
+    "AppName": "BaiTapAbp",
+    "Menu:Home": "Home",
+    "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information visit",
+    "Welcome": "Welcome",
+
+    "ProductNameRequired": "Product name is required",
+    "ProductNameLength": "Product name must be between {0} and {100} characters",
+    "ProductPriceRange": "Price must be between {0} and {1000000000000000000} VND",
+    "ProductStock": "Stock cannot be negative.",
+
+    "ShopNameRequired": "Shop name is required",
+    "ShopNameLength": "Shop name must be between {0} and {100} characters",
+    "AddressShopLength": "Address must be between {0} and {100} characters",
+
+    "FullNameUserRequired": "Full name is required",
+    "FullNameLength": "Full name must be between {0} and {100} characters",
+    "AddressUserLength": "Address must be between {0} and {100} characters",
+    "GenderValue": "Invalid gender value.",
+    "CategoryNameRequired": "Category name is required.",
+    "CategoryNameLength": "Category name must be between {0} and {1} characters."
+    
+  }
+}
