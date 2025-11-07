@@ -10,5 +10,6 @@ public class OrderShopEntity : FullAuditedEntity<int>
     [MaxLength(256)] public string Note { get; set; } = string.Empty;
     public int ShopId { get; set; }
     public DateTime DeliveredDate { get; set; }
-   
+    public decimal ToTalShop { get; set; }
+    public string Address { get; set; }
 }
