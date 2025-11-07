@@ -4,7 +4,7 @@ using Volo.Abp.Application.Dtos;
 
 namespace BaiTapAbp.Dtos;
 
-public class CartDto :EntityDto<int>
+public class CartDto : AuditedEntityDto<int>
 {
     [Required]
     public int ProductId {get; set;}

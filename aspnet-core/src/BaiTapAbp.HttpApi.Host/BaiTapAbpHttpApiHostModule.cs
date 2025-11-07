@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using BaiTapAbp.Authorization;
+using BaiTapAbp.Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
  
@@ -35,7 +36,9 @@ using Volo.Abp.Security.Claims;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.VirtualFileSystem;
-using OpenIddict.Server; 
+using OpenIddict.Server;
+using Volo.Abp.BlobStoring;
+using Volo.Abp.BlobStoring.FileSystem;
 using Volo.Abp.OpenIddict;
 namespace BaiTapAbp;
 
@@ -78,6 +81,7 @@ public class BaiTapAbpHttpApiHostModule : AbpModule
         ConfigureVirtualFileSystem(context);
         ConfigureCors(context, configuration);
         ConfigureSwaggerServices(context, configuration);
+        ConfigureBlobStoring();
         
         
         context.Services.PreConfigure<OpenIddictServerBuilder>(builder =>
@@ -99,7 +103,23 @@ public class BaiTapAbpHttpApiHostModule : AbpModule
           });
           */
     }
-
+    
+    private void ConfigureBlobStoring()
+    {
+        Configure<AbpBlobStoringOptions>(options =>
+        {
+            options.Containers.Configure<ProductPictureContainer>(container =>
+            { 
+                container.UseFileSystem(fileSystem =>
+                { 
+                    fileSystem.BasePath = Path.Combine(
+                        Directory.GetCurrentDirectory(), 
+                        "product-pictures"
+                    );
+                });
+            });
+        });
+    }
     private void ConfigureAuthentication(ServiceConfigurationContext context )
     {
         var configuration = context.Services.GetConfiguration();

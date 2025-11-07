@@ -2,6 +2,8 @@ import { RestService, Rest } from '@abp/ng.core';
 import type { PagedResultDto } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
 import type { CreateUpdateProductDto, ProductDto, ProductPagedRequestDto } from '../dtos/models';
+import type { IFormFile } from '../microsoft/asp-net-core/http/models';
+import type { IActionResult } from '../microsoft/asp-net-core/mvc/models';
 
 @Injectable({
   providedIn: 'root',
@@ -44,11 +46,27 @@ export class ProductService {
     { apiName: this.apiName,...config });
   
 
+  getPicture = (id: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, IActionResult>({
+      method: 'POST',
+      url: `/api/app/product/${id}/get-picture`,
+    },
+    { apiName: this.apiName,...config });
+  
+
   update = (id: number, input: CreateUpdateProductDto, config?: Partial<Rest.Config>) =>
     this.restService.request<any, ProductDto>({
       method: 'POST',
       url: `/api/app/product/${id}/update`,
       body: input,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  uploadPicture = (id: number, file: IFormFile, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, void>({
+      method: 'POST',
+      url: `/api/app/product/${id}/upload-picture`,
     },
     { apiName: this.apiName,...config });
 

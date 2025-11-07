@@ -4,7 +4,7 @@ using Volo.Abp.Application.Dtos;
 
 namespace BaiTapAbp.Dtos;
 
-public class CategoryDto :EntityDto<int>
+public class CategoryDto : AuditedEntityDto<int>
 {
     [MaxLength(100)]
     public string Name { get; set; } = string.Empty;

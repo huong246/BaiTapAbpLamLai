@@ -31,6 +31,10 @@ public class BaiTapAbpDbContext :
     public virtual DbSet<SellerRequestEntity> SellerRequests { get; set; }
     public virtual DbSet<CategoryEntity>  Categories { get; set; }
     public virtual DbSet<CartEntity> Carts { get; set; }
+    public virtual DbSet<OrderEntity> Orders { get; set; }
+    public virtual DbSet<OrderHistoryEntity> OrderHistories { get; set; }
+    public virtual DbSet<OrderItemEntity> OrderItems { get; set; }
+    public virtual DbSet<OrderShopEntity> OrderShops { get; set; }
     //Identity
  
     public DbSet<IdentityUser> Users { get;set; }
@@ -118,6 +122,13 @@ public class BaiTapAbpDbContext :
             c.Property(x => x.ProductId).IsRequired();
             c.Property(x=> x.Quantity).IsRequired();
             c.HasIndex(x => new { x.CustomerId, x.ShopId, x.ProductId }).IsUnique();
+        });
+        builder.Entity<OrderEntity>(o =>
+        {
+            o.ToTable("Order");
+            o.ConfigureByConvention();
+            o.Property(x => x.UserId).IsRequired();
+            o.Property(x => x.UserAddress).HasMaxLength(200);
         });
     }
 }

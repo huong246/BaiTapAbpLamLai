@@ -5,7 +5,7 @@ using Volo.Abp.Application.Dtos;
 
 namespace BaiTapAbp.Dtos;
 
-public class ProductDto: EntityDto<int>
+public class ProductDto: AuditedEntityDto<int>
 {
     [MaxLength(100)]
     public string Name { get; set; } = string.Empty;
@@ -13,6 +13,7 @@ public class ProductDto: EntityDto<int>
     public decimal Price { get; set; }
     public int Stock { get; set; }
     public int ShopId { get; set; }
+    public string? ProfilePictureUrl { get; set; }
 }
 public class CreateUpdateProductDto
 {

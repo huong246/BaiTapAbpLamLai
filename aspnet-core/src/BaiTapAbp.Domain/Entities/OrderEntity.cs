@@ -9,8 +9,10 @@ namespace BaiTapAbp.Entities;
 [Table("Order")]
 public class OrderEntity : FullAuditedAggregateRoot<int>
 {
+    [Column(TypeName = "decimal(18,2)")]
     public decimal ToTalOrder{ get; set; }
     public OrderStatus Status {get;set;}
+    [Required]
     public Guid UserId { get; set; }
     public int InvoiceId { get; set; }
     [MaxLength(200)]

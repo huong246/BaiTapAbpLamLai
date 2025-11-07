@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from '@abp/ng.core';
+import { AdminGuard } from './core/auth/admin.guard';
+import { SellerGuard } from './core/auth/seller.guard';
 
 const routes: Routes = [
   {
@@ -26,13 +29,26 @@ const routes: Routes = [
       import('@abp/ng.setting-management').then(m => m.SettingManagementModule.forLazy()),
   },
   {
-    path: 'products',
-    loadChildren: ()=> import('./component/product/product.module').then(m=> m.ProductModule)
+    path: 'admin/seller-requests',
+    loadChildren: () => import('./component/seller-requests/seller-requests.module').then(m=>m.SellerRequestsModule),
+    canActivate: [AuthGuard, AdminGuard],
   },
   {
-    path: 'shop',
-    loadChildren: () => import('./component/shop/shop.module').then(m=> m.ShopModule)
-  }
+    path: 'my-shop',
+    loadChildren: ()=> import('./component/shop-management/shop-management.module').then(m => m.ShopManagementModule),
+    canActivate: [AuthGuard, SellerGuard],
+  },
+  {
+    path: 'my-products',
+    loadChildren: ()=> import('./component/product-management/product-management.module').then(m => m.ProductManagementModule),
+    canActivate: [AuthGuard, SellerGuard],
+  },
+  {
+    path: 'profile',
+    loadChildren: () =>
+      import('./component/customer/user-profile/user-profile.module').then(m => m.UserProfileModule),
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({

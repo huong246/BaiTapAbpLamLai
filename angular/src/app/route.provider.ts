@@ -16,28 +16,29 @@ function configureRoutes(routesService: RoutesService) {
         layout: eLayoutType.application,
       },
       {
-        path: '/shop',
-        name: 'Menu:Shops',
-        iconClass: 'fa-solid fa-shop',
+        path: 'admin/seller-requests',
+        name: 'Duyệt yêu cầu mở bán',
+        iconClass: 'fas fa-user-check',
         order: 2,
         layout: eLayoutType.application,
-        requiredPolicy: 'RolePermissions.Shops.Default',
+        requiredPolicy: 'MyProject.SellerRequests.Default',
       },
       {
-        path: '/category',
-        name: 'Menu:Categories',
-        iconClass: '<fa-solid fa-list',
-        parentName: 'Menu:Shops',
+        path: '/my-shop',
+        name: 'Cửa hàng',
+        iconClass: 'fas fa-store',
+        order: 2,
         layout: eLayoutType.application,
+        requiredPolicy: 'MyProject.Shops.Default',
       },
       {
-        path: '/product',
-        name: 'Menu:Products',
+        path: '/my-products',
+        name: 'Sản phẩm',
         iconClass: 'fas fa-box',
-        parentName: 'Menu:Categories',
+        order:3,
         layout: eLayoutType.application,
-        requiredPolicy: 'RolePermissions.Products.Default',
-      }
+        requiredPolicy: 'Products.Default',
+      },
     ]);
   };
 }

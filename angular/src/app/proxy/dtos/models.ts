@@ -1,4 +1,4 @@
-import type { EntityDto, PagedAndSortedResultRequestDto, PagedResultRequestDto } from '@abp/ng.core';
+import type { AuditedEntityDto, EntityDto, PagedAndSortedResultRequestDto, PagedResultRequestDto } from '@abp/ng.core';
 import type { RequestStatus } from '../entities/enum/request-status.enum';
 
 export interface BasePagedResultRequestDto extends PagedResultRequestDto {
@@ -6,7 +6,7 @@ export interface BasePagedResultRequestDto extends PagedResultRequestDto {
   filterFts?: string;
 }
 
-export interface CartDto extends EntityDto<number> {
+export interface CartDto extends AuditedEntityDto<number> {
   productId: number;
   shopId: number;
   customerId: number;
@@ -16,7 +16,7 @@ export interface CartDto extends EntityDto<number> {
 export interface CartPagedRequestDto extends BasePagedResultRequestDto {
 }
 
-export interface CategoryDto extends EntityDto<number> {
+export interface CategoryDto extends AuditedEntityDto<number> {
   name?: string;
 }
 
@@ -47,11 +47,12 @@ export interface CreateUpdateShopDto {
   address?: string;
 }
 
-export interface ProductDto extends EntityDto<number> {
+export interface ProductDto extends AuditedEntityDto<number> {
   name?: string;
   price: number;
   stock: number;
   shopId: number;
+  profilePictureUrl?: string;
 }
 
 export interface ProductPagedRequestDto extends BasePagedResultRequestDto {
@@ -70,7 +71,7 @@ export interface SellerRequestPageDto extends PagedAndSortedResultRequestDto {
   status?: RequestStatus;
 }
 
-export interface ShopDto extends EntityDto<number> {
+export interface ShopDto extends AuditedEntityDto<number> {
   name?: string;
   address?: string;
 }

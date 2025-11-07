@@ -1,0 +1,10 @@
+<h3>Thông tin cá nhân</h3>
+<button
+  *ngIf="!hasSellerRole && !hasPendingRequest"
+  (click)="sendSellerRequest()">
+  Yêu cầu trở thành Người bán
+</button>
+
+<div *ngIf="hasPendingRequest">
+  Yêu cầu của bạn đang chờ duyệt.
+</div>

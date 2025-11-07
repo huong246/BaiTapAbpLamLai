@@ -15,4 +15,6 @@ public class ProductEntity :  FullAuditedAggregateRoot<int>
     public int Stock { get; set; }
     public int ShopId {get; set;}
     public int CategoryId {get;set;}
+    [MaxLength(255)]  
+    public string? ProfilePictureBlobName { get; set; }
 }

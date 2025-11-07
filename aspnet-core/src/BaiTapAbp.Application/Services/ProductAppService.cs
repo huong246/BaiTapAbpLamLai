@@ -1,3 +1,5 @@
+using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using BaiTapAbp.Authorization;
@@ -5,16 +7,20 @@ using BaiTapAbp.Dtos;
 using BaiTapAbp.Entities;
 using BaiTapAbp.Repositories;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.StaticFiles;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
-using Volo.Abp.Domain.Repositories;
+using Volo.Abp.BlobStoring;
+ 
 using Volo.Abp.Users;
 
 namespace BaiTapAbp.Services;
 [Authorize(RolePermissions.Products.Default)]
-public class ProductAppService(IProductRepository productRepository, ICategoryRepository categoryRepository, IShopRepository shopRepository)
+public class ProductAppService(IProductRepository productRepository, ICategoryRepository categoryRepository, IShopRepository shopRepository, 
+    IBlobContainer<ProductPictureContainer> blobContainer, IContentTypeProvider contentTypeProvider)
     : CrudAppService<ProductEntity, ProductDto, int, ProductPagedRequestDto, CreateUpdateProductDto>(productRepository)
 {
     protected override async Task<IQueryable<ProductEntity>> CreateFilteredQueryAsync(ProductPagedRequestDto input)
@@ -22,7 +28,7 @@ public class ProductAppService(IProductRepository productRepository, ICategoryRe
         var query = await base.CreateFilteredQueryAsync(input);
         query = query.WhereIf(
             !string.IsNullOrWhiteSpace(input.Filter), 
-            x => x.Name.Contains(input.Filter)
+            x => input.Filter != null && x.Name.Contains(input.Filter)
         );
         return query;
     }
@@ -32,7 +38,16 @@ public class ProductAppService(IProductRepository productRepository, ICategoryRe
     [AllowAnonymous]
     public override async Task<PagedResultDto<ProductDto>> GetListAsync(ProductPagedRequestDto input)
     {
-        return await base.GetListAsync(input);  
+        var result = await base.GetListAsync(input);
+        foreach (var itemDto in result.Items)
+        {
+            var entity = await productRepository.FindAsync(itemDto.Id);
+            if (entity != null && !entity.ProfilePictureBlobName.IsNullOrWhiteSpace())
+            {
+                itemDto.ProfilePictureUrl = $"/api/app/product/{itemDto.Id}/picture";
+            }
+        }
+        return result;
     }
     //create product
     [HttpPost]
@@ -74,7 +89,7 @@ public class ProductAppService(IProductRepository productRepository, ICategoryRe
         return await base.UpdateAsync(id, input);
     }
     
-    //detele product
+    //delete product
     [HttpPost]
     [ActionName("Delete")]
     [Authorize(RolePermissions.Products.Delete)]
@@ -94,4 +109,58 @@ public class ProductAppService(IProductRepository productRepository, ICategoryRe
         return base.MapToEntityAsync(updateInput, entity);
     }
     */
+    
+    [HttpPost]
+    [ActionName("UploadPicture")]
+    public  async Task UploadPictureAsync(int id, [FromForm] IFormFile file)
+    {
+        if (file == null || file.Length == 0)
+        {
+            throw new UserFriendlyException("No file uploaded");
+        }
+
+        var product = await productRepository.GetAsync(id);
+        if (!product.ProfilePictureBlobName.IsNullOrWhiteSpace())
+        {
+            await blobContainer.DeleteAsync(product.ProfilePictureBlobName);
+        }
+
+        //tao ten file duy nhat
+        var blobName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
+        //luu file moi vao blob
+        await blobContainer.SaveAsync(blobName, file.OpenReadStream());
+        product.ProfilePictureBlobName = blobName;
+        await productRepository.UpdateAsync(product);
+    }
+
+    [HttpPost]
+    [ActionName("GetPicture")]
+    public async Task<IActionResult> GetPictureAsync(int id)
+    {
+        var product = await productRepository.GetAsync(id);
+        if (product.ProfilePictureBlobName.IsNullOrWhiteSpace())
+        {
+            return new NotFoundResult();
+        }
+
+        var stream = await blobContainer.GetAsync(product.ProfilePictureBlobName);
+        if (!contentTypeProvider.TryGetContentType(product.ProfilePictureBlobName, out var contentType))
+        { 
+            contentType = "application/octet-stream";
+        }
+        return new FileStreamResult(stream,contentType);
+    }
+
+    public override async Task<ProductDto> GetAsync(int id)
+    {
+        var entity = await productRepository.GetAsync(id);
+        var dto = ObjectMapper.Map<ProductEntity, ProductDto>(entity);
+        if (!entity.ProfilePictureBlobName.IsNullOrWhiteSpace())
+        {
+            dto.ProfilePictureUrl = $"/api/app/product/{id}/picture";
+        }
+
+        return dto;
+    }
+    
 }

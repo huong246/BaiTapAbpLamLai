@@ -3,7 +3,7 @@ using Volo.Abp.Application.Dtos;
 
 namespace BaiTapAbp.Dtos;
 
-public class ShopDto: EntityDto<int>
+public class ShopDto: AuditedEntityDto<int>
 {
     [MaxLength(100)]
     public string Name { get; set; } = string.Empty;
