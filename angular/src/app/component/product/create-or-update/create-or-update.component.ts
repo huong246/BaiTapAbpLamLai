@@ -11,7 +11,7 @@ import {NzMessageService} from 'ng-zorro-antd/message';
   styleUrl: './create-or-update.component.scss'
 })
 class CreateOrUpdateProductComponent {
-  @Output() onSaved = new EventEmitter<void>();
+  //@Output() onSaved = new EventEmitter<void>();
   visible = false;
   provinceId?: number;
   visibiChange = new EventEmitter<boolean>();
