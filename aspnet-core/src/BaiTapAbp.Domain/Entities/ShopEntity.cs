@@ -13,5 +13,6 @@ public class ShopEntity : FullAuditedEntity<int>
     public string Name { get; set; } = string.Empty;
     [MaxLength(100)]
     public string Address { get; set; } = string.Empty;
+    [Required]
     public Guid SellerId { get; set; }
 }

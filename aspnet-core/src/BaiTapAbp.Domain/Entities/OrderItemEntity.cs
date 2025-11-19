@@ -7,6 +7,7 @@ namespace BaiTapAbp.Entities;
 public class OrderItemEntity : FullAuditedEntity<int>
 {
     //dai dien cho 1 mat hang trong 1 don hang thuoc 1 shop
+    
     public int ProductId { get; set; }
     public int OrderId { get; set; }
     public int OrderShopId { get; set; }

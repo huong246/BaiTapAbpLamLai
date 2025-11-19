@@ -13,6 +13,10 @@ public class ProductEntity : FullAuditedEntity<int>
     [Column(TypeName = "decimal(18,2)")]
     public decimal Price { get; set; }
     public int Stock { get; set; }
+    [Required]
     public int ShopId {get; set;}
+    [Required]
     public int CategoryId {get;set;}
+    [MaxLength(2000)]
+    public string? Description { get; set; }
 }

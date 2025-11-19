@@ -31,6 +31,8 @@ public class BaiTapAbpDbContext :
     public virtual DbSet<SellerRequestEntity> SellerRequests { get; set; }
     public virtual DbSet<CategoryEntity>  Categories { get; set; }
     public virtual DbSet<CartEntity> Carts { get; set; }
+    public DbSet<ProductImageEntity> ProductImages { get; set; }
+
     //Identity
  
     public DbSet<IdentityUser> Users { get;set; }

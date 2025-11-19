@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Autofac.Core;
 using BaiTapAbp.Authorization;
+using BaiTapAbp.BlobContainers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
  
@@ -35,7 +37,9 @@ using Volo.Abp.Security.Claims;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.VirtualFileSystem;
-using OpenIddict.Server; 
+using OpenIddict.Server;
+using Volo.Abp.BlobStoring;
+using Volo.Abp.BlobStoring.FileSystem;
 using Volo.Abp.OpenIddict;
 namespace BaiTapAbp;
 
@@ -91,6 +95,16 @@ public class BaiTapAbpHttpApiHostModule : AbpModule
         {
             options.ExpireTimeSpan = TimeSpan.FromDays(7);
             options.SlidingExpiration = true; 
+        });
+        Configure<AbpBlobStoringOptions>(options =>
+        {
+            options.Containers.Configure<ProductImageContainer>(container =>
+            {
+                container.UseFileSystem(fs =>
+                {
+                    fs.BasePath = Path.Combine(Directory.GetCurrentDirectory(), "blob-storage");
+                });
+            });
         });
 
         /* Configure<MvcOptions>(options =>
