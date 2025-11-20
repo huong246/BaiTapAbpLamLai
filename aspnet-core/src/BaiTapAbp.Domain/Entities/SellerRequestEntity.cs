@@ -8,6 +8,7 @@ namespace BaiTapAbp.Entities;
 [Table("SellerRequest")]
 public class SellerRequestEntity : FullAuditedEntity<int>
 {
+    [Required]
     public Guid UserId { get; protected set; }
     public Guid? ReviewerId  { get; protected set; }
     public RequestStatus Status { get; protected set; }
