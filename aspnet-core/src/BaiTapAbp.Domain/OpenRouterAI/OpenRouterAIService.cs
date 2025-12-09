@@ -11,7 +11,7 @@ namespace Ord.MasterData.Services.OpenRouterAI
 {
     public class OpenRouterAIService : DomainService
     {
-        private readonly string _apiKey = "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";
+        private readonly string _apiKey = "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";
         private readonly string URL = "https://openrouter.ai/api/v1/chat/completions";
 
         public Task<string> AskLLMAsync(string prompt)

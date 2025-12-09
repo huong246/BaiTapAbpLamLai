@@ -6,11 +6,15 @@ using System.Threading.Tasks;
 using BaiTapAbp.OpenRouterAI;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
+using Ord.MasterData.Services.OpenRouterAI.Events;
 using Volo.Abp.Domain.Services;
+using Volo.Abp.EventBus.Local;
+
 namespace Ord.MasterData.Services.OpenRouterAI
 {
     public class MedicalVoiceApiService(ClinicLoadPromptService loadPromptService,
-        OpenRouterAIService openRouterAIService, WhisperPythonService _whisperService
+        OpenRouterAIService openRouterAIService, WhisperPythonService _whisperService,
+        ILocalEventBus localEventBus
             ) : DomainService
     { 
         //private readonly IHubContext<MedicalVoiceHub> _hubContext;
@@ -65,8 +69,18 @@ namespace Ord.MasterData.Services.OpenRouterAI
                     fileName, 
                     language
                 );
+                Logger.LogInformation($"Text nhận từ Whisper: {speechToText.Text}");
                 var speechText  = speechToText.Text;
-                return await ProcessVoiceInputAsync(speechText);
+                var response = await ProcessVoiceInputAsync(speechText);
+                if (response.Success && response.Fields != null)
+                {
+                    await localEventBus.PublishAsync(new MedicalVoiceProcessedEto
+                    {
+                        Success = true,
+                        Fields = response.Fields,
+                    });
+                }
+                return response;
             }
             catch (Exception ex)
             {

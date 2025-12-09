@@ -115,6 +115,8 @@ public class BaiTapAbpHttpApiHostModule : AbpModule
                 });
             });
         });
+        
+        ConfigureCors(context, configuration);
 
         /* Configure<MvcOptions>(options =>
           {
