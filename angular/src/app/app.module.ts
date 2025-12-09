@@ -21,7 +21,10 @@ import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { APP_ROUTE_PROVIDER } from './route.provider';
-
+import { Routes } from '@angular/router';
+import {
+  MedicalExaminationFormComponent
+} from './components/medical-examination-form/medical-examination-form.component';
 @NgModule({
   imports: [
     BrowserModule,
