@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using BaiTapAbp.EntityFrameworkCore;
+using BaiTapAbp.Hubs;
 using BaiTapAbp.MultiTenancy;
  
 using Microsoft.AspNetCore.Identity;
@@ -42,7 +43,7 @@ using Volo.Abp.BlobStoring;
 using Volo.Abp.BlobStoring.FileSystem;
 using Volo.Abp.OpenIddict;
 namespace BaiTapAbp;
-
+using Microsoft.Extensions.DependencyInjection;
 [DependsOn(
     typeof(BaiTapAbpHttpApiModule),
     typeof(AbpAutofacModule),
@@ -82,7 +83,15 @@ public class BaiTapAbpHttpApiHostModule : AbpModule
         ConfigureVirtualFileSystem(context);
         ConfigureCors(context, configuration);
         ConfigureSwaggerServices(context, configuration);
+        context.Services.AddHttpClient();
         
+        context.Services.AddSignalR(options =>
+        {
+            // Chỉ bật chi tiết lỗi khi ở môi trường Dev
+            options.EnableDetailedErrors = hostingEnvironment.IsDevelopment(); 
+            options.KeepAliveInterval = TimeSpan.FromSeconds(15);
+            options.ClientTimeoutInterval = TimeSpan.FromSeconds(30);
+        });
         
         context.Services.PreConfigure<OpenIddictServerBuilder>(builder =>
         {
@@ -272,11 +281,8 @@ public class BaiTapAbpHttpApiHostModule : AbpModule
 
             await next();
         });
-
         app.UseAuthentication();
        // app.UseAbpOpenIddictValidation();
-    
-
         if (MultiTenancyConsts.IsEnabled)
         {
             app.UseMultiTenancy();
@@ -288,6 +294,18 @@ public class BaiTapAbpHttpApiHostModule : AbpModule
             {
                 apiApp.UseAbpOpenIddictValidation();
             });
+        app.UseConfiguredEndpoints(endpoints =>
+        { 
+            endpoints.MapControllers();
+ 
+            endpoints.MapHub<MedicalVoiceHub>("/hubs/medical-voice", options =>
+            {
+                // Cấu hình Transports như code bạn yêu cầu
+                options.Transports = 
+                    Microsoft.AspNetCore.Http.Connections.HttpTransportType.WebSockets | 
+                    Microsoft.AspNetCore.Http.Connections.HttpTransportType.LongPolling;
+            });
+        });
         app.UseUnitOfWork();
         app.UseDynamicClaims();
         app.UseAuthorization();
@@ -300,7 +318,6 @@ public class BaiTapAbpHttpApiHostModule : AbpModule
         app.UseAbpSwaggerUI(c =>
         {
             c.SwaggerEndpoint("/swagger/v1/swagger.json", "BaiTapAbp API");
-
             var configuration = context.ServiceProvider.GetRequiredService<IConfiguration>();
             c.OAuthClientId(configuration["AuthServer:SwaggerClientId"]);
             c.OAuthScopes("BaiTapAbp");
@@ -308,8 +325,6 @@ public class BaiTapAbpHttpApiHostModule : AbpModule
             c.ConfigObject.AdditionalItems.Add("persistAuthorization", "false");
           
         });
-        
-
         app.UseAuditing();
         app.UseAbpSerilogEnrichers();
         app.UseConfiguredEndpoints();

@@ -16,6 +16,7 @@
     <PackageReference Include="Dapper" Version="2.1.66" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.1" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.2" />
+    <PackageReference Include="RestSharp" Version="113.0.0" />
     <PackageReference Include="Volo.Abp.AspNetCore.Authentication.JwtBearer" Version="8.1.0" />
     <PackageReference Include="Volo.Abp.AutoMapper" Version="8.3.0" />
     <PackageReference Include="Volo.Abp.BlobStoring" Version="8.2.3" />
@@ -31,5 +32,9 @@
     <PackageReference Include="Volo.Abp.OpenIddict.Domain" Version="8.3.0" />
     <PackageReference Include="Volo.Abp.PermissionManagement.Domain.OpenIddict" Version="8.3.0" />
   </ItemGroup>
-
+    <ItemGroup>
+        <None Update="OpenRouterAI\Prompts\ClinicMedicalResultPrompt.txt">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
 </Project>
