@@ -13,8 +13,8 @@ import { BaseCoreModule } from '@abp/ng.core';
     NgClass,
     BaseCoreModule
   ],
-  templateUrl: './medical-examination-form.component.html',
-  styleUrl: './medical-examination-form.component.scss'
+  templateUrl: './medicalExaminationForm.html',
+  styleUrl: './medicalExaminationForm.scss'
 })
 export class MedicalExaminationFormComponent implements OnInit, OnDestroy{
   medicalForm!: FormGroup;

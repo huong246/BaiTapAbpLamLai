@@ -1,58 +1,50 @@
-/* You can add global styles to this file, and also import other style files */
+/* src/styles.scss */
+html, body {
+  height: 100%;
+  margin: 0;
+}
 
-@keyframes donut-spin {
-  0% {
-    transform: rotate(0deg);
+app-root {
+  height: 100%;
+  display: block;
+}
+
+@import "ng-zorro-antd/ng-zorro-antd.min.css";
+/* --- ÁP DỤNG RIÊNG CHO TRANG CÓ eLayoutType.empty --- */
+/* LeptonX Theme (hoặc Dynamic Layout) sẽ thêm class 'is-empty-layout'
+   vào thẻ body khi layout là eLayoutType.empty */
+
+body.is-empty-layout {
+  /* 1. Ẩn Sidebar (Size bar) */
+  .lpx-sidebar-container {
+    display: none !important;
   }
-  100% {
-    transform: rotate(360deg);
+
+  /* 2. Đẩy nội dung chính (Content) ra sát lề trái */
+  /* LeptonX dùng padding-inline-start để chừa chỗ cho sidebar */
+  .lpx-content-container {
+    padding-inline-start: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
   }
-}
-:root {
-  --lpx-logo: url('/assets/images/logo/logo-light.png');
-  --lpx-logo-icon: url('/assets/images/logo/logo-light-thumbnail.png');
-}
-.donut {
-  display: inline-block;
-  border: 4px solid rgba(0, 0, 0, 0.1);
-  border-left-color: #7983ff;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  animation: donut-spin 1.2s linear infinite;
 
-  &.centered {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  /* 3. Đẩy thanh Header (Top bar) ra sát lề trái */
+  .lpx-topbar-container {
+    left: 0 !important;
+    width: 100% !important;
   }
-}
 
-.abp-logo {
-  background-repeat: no-repeat;
-}
+  /* 4. Ẩn luôn Logo và nút 3 gạch (ở Header) */
+  .lpx-mobile-menu-btn,
+  .lpx-logo-container {
+    display: none !important;
+  }
 
-.abp-support {
-  width: 178px;
-  height: 30px;
-  background-image: url('/assets/images/getting-started/abp-support.svg');
-}
+  /* 5. Ẩn menu chính của Header (Home, Admin,...) */
+  .lpx-navbar-nav {
+    display: none !important;
+  }
 
-.abp-community {
-  width: 215px;
-  height: 30px;
-  background-image: url('/assets/images/getting-started/abp-community.svg');
-}
-
-.abp-blog {
-  width: 142px;
-  height: 30px;
-  background-image: url('/assets/images/getting-started/abp-blog.svg');
-}
-
-.logo-x {
-  width: 20px;
-  height: 20px;
-  background-image: url('/assets/images/getting-started/x.svg');
+  /* 6. (Tùy chọn) Ẩn luôn Header nếu muốn một trang trắng tinh */
+  /* .lpx-topbar-container { display: none !important; } */
 }

@@ -1,0 +1,369 @@
+
+
+.medical-form-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #f5f5f5;
+}
+.status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: white;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+  .status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #ccc;
+      animation: pulse 2s infinite;
+    }
+
+    .text {
+      font-weight: 500;
+      color: #666;
+    }
+  }
+
+  &.connected {
+    border-left: 4px solid #4caf50;
+
+    .dot {
+      background: #4caf50;
+    }
+
+    .text {
+      color: #4caf50;
+    }
+  }
+
+  &.disconnected {
+    border-left: 4px solid #f44336;
+
+    .dot {
+      background: #f44336;
+    }
+  }
+
+  &.reconnecting {
+    border-left: 4px solid #ff9800;
+
+    .dot {
+      background: #ff9800;
+    }
+  }
+
+  .processing-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #2196f3;
+    font-style: italic;
+
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid #2196f3;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+  }
+
+  .btn-test {
+    padding: 6px 12px;
+    background: #e3f2fd;
+    border: 1px solid #2196f3;
+    border-radius: 4px;
+    color: #2196f3;
+    cursor: pointer;
+    font-size: 14px;
+
+    &:hover {
+      background: #2196f3;
+      color: white;
+    }
+  }
+}
+
+
+
+
+
+ .bang-thong-tin {
+   display: flex;
+   flex-direction: column;
+   border-left: 1px solid #ddd;
+   border-top: 1px solid #ddd;
+ }
+
+ .group {
+   display: grid;
+   grid-template-columns: repeat(3, 1fr);
+   border-bottom: 1px solid #ddd;
+ }
+
+ .name {
+   display: grid;
+   grid-template-columns: repeat(2, 1fr);
+ }
+ .mach {
+   display: grid;
+   grid-template-columns: repeat(2, 1fr);
+ }
+
+ .group-1 {
+   display: grid;
+   grid-template-columns: repeat(4, 1fr);
+   width: 100%;
+   border-bottom: 1px solid #ddd;
+ }
+
+ .group-2 {
+   display: grid;
+   grid-template-columns: 1fr 3fr;
+ }
+ .group-3 {
+   display: grid;
+   grid-template-columns: 1fr 3fr;
+ }
+
+ .grid-item {
+   padding: 8px;
+   border-right: 1px solid #ddd;
+   display: flex;
+   align-items: center;
+ }
+
+.grid-item.label {
+  background-color: #f9f9f9;
+  font-weight: 500;
+  color: #666;
+}
+
+.grid-item.input {
+  background-color: white;
+}
+.grid-item input {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 13px;
+  padding: 0;
+  background-color: transparent;
+}
+.span-2 { grid-column: span 2; }
+.span-3 { grid-column: span 3; }
+.grid-item input:focus {
+  outline: 2px solid #4CAF50;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+$border-color: #dee2e6;
+$label-bg: #f8f9fa;
+$text-color: #333;
+
+//local2
+.tien-su, .benh-su, .local-3{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  width: 100%;
+  background-color: #fff;
+  font-size: 13px;
+  &.local-3 {
+    border-top: none;
+  }
+}
+
+.form-chung, .form-local-3{
+  display: flex;
+  flex-direction: column;
+
+  min-height: 70px;
+  position: relative;
+}
+
+.local-4 {
+  display: grid;
+  grid-template-columns: 3fr 5fr;
+  gap: 8px;
+}
+.left-local {
+  display: flex;
+  flex-direction: column;;
+}
+
+
+.top-local, .bottom-local{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.result-local, .return-local {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.table-section {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.table-header {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  background-color: #e8eaf6;
+  border-bottom: 1px solid #ddd;
+}
+
+.table-header div {
+  padding: 10px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #555;
+}
+
+.table-header div:first-child {
+  border-right: 1px solid #ddd;
+}
+
+.table-body {
+  max-height: 300px;
+  overflow-y: auto;
+  background-color: white;
+}
+
+.table-row {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  border-bottom: 1px solid #f0f0f0;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.table-row:hover {
+  background-color: #f5f5f5;
+}
+
+.table-row div {
+  padding: 10px 12px;
+  font-size: 13px;
+  color: #333;
+}
+
+.table-row div:first-child {
+  border-right: 1px solid #f0f0f0;
+  color: #2196F3;
+  font-weight: 500;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  color: #999;
+}
+
+.empty-state .icon {
+  width: 60px;
+  height: 60px;
+  background-color: #f0f0f0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  font-size: 24px;
+}
+
+.empty-state .text {
+  font-size: 13px;
+}
+
+.hidden {
+  display: none;
+}
+
+.calendar-icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-image: url('/assets/images/component/calendar.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.lich-kham-lai {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+
+/* Container chứa nút */
+.form-actions {
+  padding: 20px 0; /* Khoảng cách trên dưới */
+  display: flex;
+  justify-content: center; /* Căn giữa nút theo chiều ngang */
+  background-color: #fff; /* Hoặc màu nền của form */
+}
+
+/* Định dạng nút Lưu */
+.btn-save {
+  background-color: #28a745; /* Màu xanh lá cây giống hình */
+  color: white; /* Màu chữ và icon trắng */
+  border: none; /* Không viền */
+  padding: 10px 25px; /* Độ dày của nút */
+  border-radius: 4px; /* Bo tròn góc nhẹ */
+  font-size: 14px; /* Cỡ chữ */
+  font-weight: 600; /* Chữ đậm */
+  cursor: pointer; /* Con trỏ tay khi di chuột */
+
+  /* Sử dụng Flexbox để căn icon và chữ thẳng hàng */
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Khoảng cách giữa icon và chữ */
+
+  transition: background-color 0.2s ease-in-out; /* Hiệu ứng chuyển màu mượt mà */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Đổ bóng nhẹ */
+
+  /* Kích thước icon */
+  i {
+    font-size: 16px;
+  }
+
+  /* Hiệu ứng khi di chuột vào nút */
+  &:hover {
+    background-color: #218838; /* Màu xanh đậm hơn */
+  }
+
+  /* Hiệu ứng khi nhấn nút */
+  &:active {
+    background-color: #1e7e34;
+    box-shadow: none; /* Tắt bóng khi nhấn */
+    transform: translateY(1px); /* Nhún nhẹ xuống */
+  }
+  &:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+    opacity: 0.65;
+  }
+}

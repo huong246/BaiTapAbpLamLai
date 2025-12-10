@@ -23,3 +23,147 @@
     height: 100% !important;
   }
 }
+.nz-layout {
+  min-height: 100vh;
+
+}
+.trigger {
+  font-size: 18px;
+  line-height: 64px;
+  padding: 0 24px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.trigger:hover {
+  color: #1890ff;
+}
+.btn-logout {
+
+  background-color: #03224c !important;
+
+  color: #f4f4f4 !important;
+
+  border-radius: 5px !important;
+
+  font-weight: bold;
+
+  border: none !important;
+
+}
+
+.btn-logout:hover {
+
+  background-color: #3e639e !important;
+
+  color: #ffffff !important;
+
+  opacity: 0.9;
+
+  transition: background-color 0.3s ease;
+
+}
+
+nz-header {
+
+  background: #fff;
+
+  padding: 0;
+
+}
+
+
+
+nz-content {
+
+  display: flex;
+
+  flex-direction: column;
+
+  margin: 0 16px;
+
+  color: #333333;
+
+  font-weight:bold;
+
+}
+
+
+
+nz-breadcrumb {
+
+  margin: 16px 0;
+
+}
+
+
+
+.inner-content {
+
+  padding: 24px;
+
+  background: #fff;
+
+  min-height: calc(100vh - 170px);
+
+  flex-grow: 1;
+
+}
+
+
+
+nz-footer {
+
+  text-align: center;
+
+}
+
+.header-container {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  height: 100%;
+
+}
+
+
+
+.trigger {
+
+  font-size: 18px;
+
+  line-height: 64px;
+
+  padding: 0 24px;
+
+  cursor: pointer;
+
+  transition: color 0.3s;
+
+}
+
+
+
+.trigger:hover {
+
+  color: #1890ff;
+
+}
+
+
+
+nz-header {
+
+  background: #fff;
+
+  padding: 0 16px 0 0;
+
+  height: 64px;
+
+}
+
+

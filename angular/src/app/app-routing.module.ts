@@ -1,12 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MedicalExaminationFormComponent } from './components/medical-examination-form/medical-examination-form.component';
+import { eLayoutType } from '@abp/ng.core';
 const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
     component: MedicalExaminationFormComponent,
-
+    data: {
+      layout: eLayoutType.empty
+    }
   },
   {
     path: 'account',
