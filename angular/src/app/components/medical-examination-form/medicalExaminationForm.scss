@@ -1,7 +1,13 @@
+$border-color: #ddd;
+$label-bg: #f5f5f5;
+$text-color: #333;
+$input-bg: white;
+$primary-color: #4caf50;
+$font-size-base: 14px;
 
-
+// Container
 .medical-form-container {
-  max-width: 1400px;
+  max-width: 1700px;
   margin: 0 auto;
   padding: 20px;
   background: #f5f5f5;
@@ -96,15 +102,12 @@
   }
 }
 
-
-
-
-
  .bang-thong-tin {
    display: flex;
    flex-direction: column;
    border-left: 1px solid #ddd;
    border-top: 1px solid #ddd;
+   background-color: #fff;
  }
 
  .group {
@@ -151,6 +154,7 @@
   color: #666;
 }
 
+
 .grid-item.input {
   background-color: white;
 }
@@ -158,9 +162,14 @@
   width: 100%;
   border: none;
   outline: none;
-  font-size: 13px;
+  font-size: 14px;
   padding: 0;
   background-color: transparent;
+  &::placeholder {
+    color: #c5c4c4;
+    opacity: 1;
+    font-style: italic;
+  }
 }
 .span-2 { grid-column: span 2; }
 .span-3 { grid-column: span 3; }
@@ -168,6 +177,28 @@
   outline: 2px solid #4CAF50;
   outline-offset: 2px;
   border-radius: 2px;
+}
+
+textarea, input, select{
+  border: 1px solid #d3d3d3;
+  border-radius: 4px;
+  &::placeholder {
+    color: #c5c4c4;
+    opacity: 1;
+    font-style: italic;
+  }
+}
+
+input {
+  &::placeholder {
+    text-align: right;
+  }
+}
+
+.local-4 input {
+  &::placeholder {
+    text-align: left;
+  }
 }
 $border-color: #dee2e6;
 $label-bg: #f8f9fa;
@@ -180,28 +211,66 @@ $text-color: #333;
   gap: 10px;
   width: 100%;
   background-color: #fff;
-  font-size: 13px;
+  padding: 10px;
+  font-size: 14px;
   &.local-3 {
     border-top: none;
   }
 }
 
-.form-chung, .form-local-3{
+
+
+
+.form-chung{
   display: flex;
   flex-direction: column;
-
-  min-height: 70px;
+  min-height: 40px;
   position: relative;
+  textarea {
+    height: 100px;
+  }
+}
+
+.return-local {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 5px;
+
+}
+
+.form-local-3 {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.local-kham-lai {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: center;
+  gap: 10px;
+}
+.thoi-gian-kham-lai {
+  display: flex;
+  flex-direction: column;
+}
+.lich-kham-lai {
+  display: flex;
+  align-items: center;
+  gap:1px
 }
 
 .local-4 {
   display: grid;
   grid-template-columns: 3fr 5fr;
   gap: 8px;
+  background-color: #fff;  // Tạo nền trắng
+  padding: 10px;
 }
 .left-local {
   display: flex;
-  flex-direction: column;;
+  flex-direction: column;
+  gap: 8px;
 }
 
 
@@ -211,7 +280,7 @@ $text-color: #333;
   gap: 10px;
 }
 
-.result-local, .return-local {
+.result-local{
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
@@ -300,17 +369,7 @@ $text-color: #333;
   display: none;
 }
 
-.calendar-icon {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  background-image: url('/assets/images/component/calendar.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  vertical-align: middle;
-  cursor: pointer;
-}
+
 
 .lich-kham-lai {
   display: grid;
@@ -318,48 +377,41 @@ $text-color: #333;
 }
 
 
-/* Container chứa nút */
 .form-actions {
-  padding: 20px 0; /* Khoảng cách trên dưới */
+  padding: 20px 0;
   display: flex;
-  justify-content: center; /* Căn giữa nút theo chiều ngang */
-  background-color: #fff; /* Hoặc màu nền của form */
+  justify-content: center;
+  background-color: #fff;
 }
 
-/* Định dạng nút Lưu */
 .btn-save {
-  background-color: #28a745; /* Màu xanh lá cây giống hình */
-  color: white; /* Màu chữ và icon trắng */
-  border: none; /* Không viền */
-  padding: 10px 25px; /* Độ dày của nút */
-  border-radius: 4px; /* Bo tròn góc nhẹ */
-  font-size: 14px; /* Cỡ chữ */
-  font-weight: 600; /* Chữ đậm */
-  cursor: pointer; /* Con trỏ tay khi di chuột */
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
 
-  /* Sử dụng Flexbox để căn icon và chữ thẳng hàng */
   display: flex;
   align-items: center;
-  gap: 8px; /* Khoảng cách giữa icon và chữ */
+  gap: 8px;
 
-  transition: background-color 0.2s ease-in-out; /* Hiệu ứng chuyển màu mượt mà */
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Đổ bóng nhẹ */
+  transition: background-color 0.2s ease-in-out;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 
-  /* Kích thước icon */
   i {
     font-size: 16px;
   }
-
-  /* Hiệu ứng khi di chuột vào nút */
   &:hover {
-    background-color: #218838; /* Màu xanh đậm hơn */
+    background-color: #218838;
   }
 
-  /* Hiệu ứng khi nhấn nút */
   &:active {
     background-color: #1e7e34;
-    box-shadow: none; /* Tắt bóng khi nhấn */
-    transform: translateY(1px); /* Nhún nhẹ xuống */
+    box-shadow: none;
+    transform: translateY(1px);
   }
   &:disabled {
     background-color: #6c757d;
@@ -367,3 +419,45 @@ $text-color: #333;
     opacity: 0.65;
   }
 }
+
+.form-chung1{
+  display: flex;
+  flex-direction: column;
+  min-height: 40px;
+  position: relative;
+
+}
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  color: #999;
+  background-color: #f6f6f6;
+
+
+  .icon-empty svg {
+    width: 60px;
+    height: 60px;
+    stroke: #ddd;
+    margin-bottom: 10px;
+    opacity: 0.8;
+  }
+
+
+  .empty-img {
+    width: 80px;
+    height: auto;
+    margin-bottom: 10px;
+    opacity: 0.5;
+    filter: grayscale(100%);
+  }
+
+  .text {
+    font-size: 13px;
+    font-weight: 500;
+    color: #888;
+  }
+}
+

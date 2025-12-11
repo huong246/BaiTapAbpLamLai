@@ -69,7 +69,7 @@ namespace Ord.MasterData.Services.OpenRouterAI
                     fileName, 
                     language
                 );
-                Logger.LogInformation($"Text nhận từ Whisper: {speechToText.Text}");
+                Logger.LogInformation($"Text from Whisper: {speechToText.Text}");
                 var speechText  = speechToText.Text;
                 var response = await ProcessVoiceInputAsync(speechText);
                 if (response.Success && response.Fields != null)

@@ -24,22 +24,22 @@
             <input type="text" placeholder="">
           </div>
           <div class="mach">
-            <div class="grid-item label">Mạch</div>
+            <div class="grid-item label" [class.updated]="isFieldUpdated('pulse')">Mạch</div>
             <div class="grid-item input">
-              <input type="text" placeholder="(lần/phút)">
+              <input type="text" formControlName="pulse" placeholder="(lần/phút)">
             </div>
           </div>
         </div>
-        <div class="group-3">
+        <div class="group-3" [class.updated]="isFieldUpdated('bloodPressure')">
           <div class="grid-item label">Huyết Áp</div>
           <div class="grid-item input">
-            <input type="text" placeholder="">
+            <input type="text" formControlName="bloodPressure" placeholder="(mmHg)">
           </div>
         </div>
         <div class="group-2">
-          <div class="grid-item label">Lý do khám</div>
+          <div class="grid-item label" [class.updated]="isFieldUpdated('reasonForVisit')">Lý do khám</div>
           <div class="grid-item input ">
-            <input type="text" placeholder="">
+            <input type="text" formControlName="reasonForVisit" placeholder="">
           </div>
         </div>
 
@@ -52,19 +52,19 @@
           <div class="grid-item input">
             <input type="text" value="Nam">
           </div>
-          <div class="grid-item label">Nhịp thở</div>
+          <div class="grid-item label" [class.updated]="isFieldUpdated('breathingRate')">Nhịp thở</div>
           <div class="grid-item input">
-            <input type="text" placeholder="(lần/phút)">
+            <input type="text" formControlName="breathingRate" placeholder="(lần/phút)">
           </div>
         </div>
         <div class="group-1">
-          <div class="grid-item label">Chiều cao</div>
+          <div class="grid-item label" [class.updated]="isFieldUpdated('height')">Chiều cao</div>
           <div class="grid-item input">
-            <input type="text" placeholder="">
+            <input type="text" formControlName="height" placeholder="(Cm)">
           </div>
-          <div class="grid-item label">Cân nặng</div>
+          <div class="grid-item label" [class.updated]="isFieldUpdated('weight')">Cân nặng</div>
           <div class="grid-item input">
-            <input type="text" placeholder="">
+            <input type="text" formControlName="weight" placeholder="(Kg)">
           </div>
         </div>
 
@@ -84,19 +84,19 @@
           <div class="grid-item input">
             <input type="text" value="2001">
           </div>
-          <div class="grid-item label">Nhiệt độ</div>
+          <div class="grid-item label" [class.updated]="isFieldUpdated('temperature')">Nhiệt độ</div>
           <div class="grid-item input">
-            <input type="text" placeholder="">
+            <input type="text" formControlName="temperature" placeholder="(°C)">
           </div>
         </div>
         <div class="group-1">
-          <div class="grid-item label">BMI</div>
+          <div class="grid-item label" [class.updated]="isFieldUpdated('bmi')">BMI</div>
           <div class="grid-item input">
-            <input type="text" placeholder="">
+            <input type="text" formControlName="bmi" placeholder="">
           </div>
-          <div class="grid-item label">Vòng bụng</div>
+          <div class="grid-item label" [class.updated]="isFieldUpdated('waistline')">Vòng bụng</div>
           <div class="grid-item input">
-            <input type="text" placeholder="">
+            <input type="text" formControlName="waistline" placeholder="(Cm)">
           </div>
         </div>
         <div class="group-2">
@@ -112,43 +112,43 @@
     <div class="tien-su-benh-su">
       <div class="tien-su">
         <div class="form-chung">
-          <label>Tiền sử bản thân</label>
+          <label [class.updated]="isFieldUpdated('personalHistory')">Tiền sử bản thân</label>
           <textarea formControlName="personalHistory" rows="3"
-                    placeholder="Nhập tiền sử gia đình..."></textarea>
+                    placeholder="Nhập tiền sử bản thân.."></textarea>
         </div>
         <div class="form-chung">
-          <label>Tiền sử gia đình</label>
+          <label [class.updated]="isFieldUpdated('familyHistory')">Tiền sử gia đình</label>
           <textarea formControlName="familyHistory" rows="3"
                     placeholder="Nhập tiền sử gia đình..."></textarea>
         </div>
         <div class="form-chung">
-          <label>Tiền sử dị ứng</label>
+          <label [class.updated]="isFieldUpdated('allergyHistory')">Tiền sử dị ứng</label>
           <textarea formControlName="allergyHistory" rows="3"
                     placeholder="Nhập tiền sử dị ứng..."></textarea>
         </div>
         <div class="form-chung">
-          <label>Vấn đề khác</label>
+          <label [class.updated]="isFieldUpdated('otherIssues')">Vấn đề khác</label>
           <textarea formControlName="otherIssues" rows="3"></textarea>
         </div>
       </div>
       <div class="benh-su">
         <div class="form-chung">
-          <label>Bệnh sử</label>
+          <label [class.updated]="isFieldUpdated('medicalHistory')">Bệnh sử</label>
           <textarea formControlName="medicalHistory" rows="4"
                     placeholder="Nhập bệnh sử..."></textarea>
         </div>
         <div class="form-chung">
-          <label>Toàn thân</label>
+          <label [class.updated]="isFieldUpdated('bodyExamination')">Toàn thân</label>
           <textarea formControlName="bodyExamination" rows="3"
                     placeholder="Khám toàn thân..."></textarea>
         </div>
         <div class="form-chung">
-          <label>Bộ phận</label>
+          <label [class.updated]="isFieldUpdated('partExamination')">Bộ phận</label>
           <textarea formControlName="partExamination"
                     placeholder="Khám bộ phận..."></textarea>
         </div>
         <div class="form-chung">
-          <label>Chuẩn đoán ban đầu</label>
+          <label [class.updated]="isFieldUpdated('initialDiagnosis')">Chuẩn đoán ban đầu</label>
           <textarea formControlName="initialDiagnosis"
                     placeholder="Chuẩn đoán ban đầu..."></textarea>
         </div>
@@ -157,11 +157,11 @@
 
     <div class="local-3">
       <div class="form-local-3">
-        <label>Độ cận MT</label>
+        <label [class.updated]="isFieldUpdated('leftEyeDegree')">Độ cận MT</label>
         <input type="text" formControlName="leftEyeDegree" >
       </div>
       <div class="form-local-3">
-        <label>Độ cận MP</label>
+        <label [class.updated]="isFieldUpdated('rightEyeDegree')">Độ cận MP</label>
         <input type="text" formControlName="rightEyeDegree">
       </div>
       <div class="form-local-3">
@@ -169,7 +169,7 @@
         <input type="text" >
       </div>
       <div class="form-local-3">
-        <label>Tim thai</label>
+        <label [class.updated]="isFieldUpdated('fetalHeart')">Tim thai</label>
         <input type="text" formControlName="fetalHeart">
       </div>
 
@@ -192,7 +192,8 @@
           </div>
           <div class="table-body" id="tableBody">
             <div class="empty-state" id="emptyState">
-              <div class="icon">📋</div>
+<!--              <div class="icon">📋</div>-->
+              <img src="./assets/images/component/folder.png" alt="Empty" class="empty-img">
               <div class="text">Không có dữ liệu</div>
             </div>
             <div id="resultList" class="hidden"></div>
@@ -202,7 +203,7 @@
       <div class="right-local">
         <div class="top-local">
           <div class="form-chung">
-            <label>Diễn biến bệnh</label>
+            <label [class.updated]="isFieldUpdated('diseaseProgress')">Diễn biến bệnh</label>
             <textarea  placeholder="Diễn biến bệnh..." ></textarea>
           </div>
           <div class="form-chung">
@@ -213,11 +214,11 @@
         </div>
         <div class="bottom-local">
           <div class="form-chung">
-            <label>Chuẩn đoán</label>
+            <label [class.updated]="isFieldUpdated('finalDiagnosis')">Chuẩn đoán</label>
             <textarea placeholder="Chuẩn đoán..."></textarea>
           </div>
           <div class="form-chung">
-            <label>Phương pháp điều trị</label>
+            <label [class.updated]="isFieldUpdated('treatment')">Phương pháp điều trị</label>
             <textarea placeholder="Phương pháp điều trị..."></textarea>
           </div>
         </div>
@@ -235,42 +236,52 @@
               <option value="...">...</option>
             </select>
           </div>
-          <div class="form-chung">
+          <div class="form-chung1">
             <span>Ghi chú</span>
             <textarea placeholder="..."></textarea>
           </div>
         </div>
+
         <div class="return-local">
           <div class="form-local-3">
-            <label>Khám lại sau</label>
-            <input type="text" placeholder="Số ngày">
-          </div>
-          <div class="form-local-3">
-            <label>Ngày khám lại</label>
-            <div class="lich-kham-lai">
-              <input
-                type="date"
-                id="dateInput"
-                class="date-input"
-                placeholder="dd/mm/yyyy">
-              <div class="time-picker">
-                <input
-                  type="time"
-                  formControlName="revisitTime"
-                  class="time-input"
-                >
+
+            <div class="local-kham-lai">
+              <div class="form-local-3">
+                <label>Khám lại sau</label>
+                <input type="text" placeholder="Số ngày">
               </div>
+              <div class="thoi-gian-kham-lai">
+                <label>Ngày khám lại</label>
+                <div class="lich-kham-lai">
+                  <input
+                    type="date"
+                    id="dateInput"
+                    class="date-input"
+                    placeholder="dd/mm/yyyy">
+                  <div class="time-picker">
+                    <input
+                      type="time"
+                      formControlName="revisitTime"
+                      class="time-input"
+                    >
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="form-chung">
+              <label>Lời dặn</label>
+              <textarea placeholder="Lời dặn..."></textarea>
             </div>
           </div>
-          <div class="form-chung">
+
+          <div class="form-chung1">
             <label>Nội dung khám lại</label>
             <textarea placeholder="..."></textarea>
           </div>
         </div>
-        <div class="form-chung">
-          <label>Lời dặn</label>
-          <textarea placeholder="Lời dặn..."></textarea>
-        </div>
+
       </div>
     </div>
 
