@@ -18,8 +18,7 @@ public class MedicalVoiceHub : Hub
     public override async Task OnConnectedAsync()
     {
         _logger.LogInformation("Client connected: {ConnectionId}", Context.ConnectionId);
-            
-        // Thông báo cho client rằng đã kết nối thành công
+        
         await Clients.Caller.SendAsync("Connected", new
         {
             connectionId = Context.ConnectionId,
